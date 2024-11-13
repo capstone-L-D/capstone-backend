@@ -8,6 +8,7 @@ import com.example.Module_Service.repo.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class ModuleService {
         return new ModuleWithContentDTO(module, contentList);
     }
 
-    // Create a new module
+
     public Modules createModule(Modules module) {
         return moduleRepository.save(module);
     }
@@ -57,7 +58,29 @@ public class ModuleService {
     }
 
     // Find multiple modules by their IDs
-    public List<Modules> findModulesByIds(List<String> moduleIds) {
-        return moduleRepository.findByModuleIdIn(moduleIds);
+    public List<ModuleWithContentDTO> findModulesByIds(List<String> moduleIds) {
+        // Step 1: Fetch all modules using module repository
+        List<Modules> modules = moduleRepository.findByModuleIdIn(moduleIds);
+
+        // Step 2: Create a list to hold the resulting ModuleWithContentDTOs
+        List<ModuleWithContentDTO> moduleWithContentDTOList = new ArrayList<>();
+
+        // Step 3: Iterate over each module
+        for (Modules module : modules) {
+            // Fetch content list for each module
+            List<ContentDto> contentList = contentClient.getContentByModuleId(module.getModuleId());
+
+            // Create a new ModuleWithContentDTO for the module and set its content
+            ModuleWithContentDTO moduleWithContentDTO = new ModuleWithContentDTO();
+            moduleWithContentDTO.setModule(module);         // Set the module data
+            moduleWithContentDTO.setContentList(contentList); // Set the content list
+
+            // Add to the result list
+            moduleWithContentDTOList.add(moduleWithContentDTO);
+        }
+
+        // Step 4: Return the list of ModuleWithContentDTOs
+        return moduleWithContentDTOList;
     }
+
 }

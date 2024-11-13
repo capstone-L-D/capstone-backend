@@ -38,7 +38,7 @@ public class ModuleController {
 
     // Batch request to retrieve multiple modules by IDs
     @PostMapping("/batch")
-    public List<Modules> getModulesByIds(@RequestBody List<String> moduleIds) {
+    public List<ModuleWithContentDTO> getModulesByIds(@RequestBody List<String> moduleIds) {
         return moduleService.findModulesByIds(moduleIds);
     }
 

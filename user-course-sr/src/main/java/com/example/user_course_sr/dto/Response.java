@@ -17,6 +17,7 @@ public class Response {
     private String courseLevel;
     private String courseCategory;
     private String imgUrl;
+    private String userCourseId;
     private LocalDate enrollmentDate;
     private Double progress;
     private LocalDate completionDate;

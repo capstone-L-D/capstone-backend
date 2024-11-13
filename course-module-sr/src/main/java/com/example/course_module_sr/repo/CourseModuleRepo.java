@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseModuleRepo  extends MongoRepository<CourseModuleRelation,String> {
     void deleteByCourseIdAndModuleId(String courseTitle, String moduleTitle);
@@ -12,4 +13,6 @@ public interface CourseModuleRepo  extends MongoRepository<CourseModuleRelation,
     List<CourseModuleRelation> findByCourseId(String courseTitle);
 
     List<CourseModuleRelation> findByModuleId(String moduleTitle);
+
+    Optional<CourseModuleRelation> findByCourseIdAndModuleId(String courseId, String moduleId);
 }

@@ -2,6 +2,7 @@ package com.example.course_module_sr.serice;
 
 
 
+import com.example.course_module_sr.dto.ModuleWithContentDTO;
 import com.example.course_module_sr.dto.Modules;
 import com.example.course_module_sr.feignClient.ModuleClient;
 import com.example.course_module_sr.model.CourseModuleRelation;
@@ -31,7 +32,7 @@ public class CourseModuleService {
         courseModuleRelationRepository.deleteByCourseIdAndModuleId(courseTitle, moduleTitle);
     }
 
-    public List<Modules> getAllModulesForCourse(String courseId) {
+    public List<ModuleWithContentDTO> getAllModulesForCourse(String courseId) {
         List<String> moduleIds = courseModuleRelationRepository.findByCourseId(courseId)
                 .stream()
                 .map(CourseModuleRelation::getModuleId)
@@ -39,6 +40,8 @@ public class CourseModuleService {
         return moduleClient.getModulesByIds(moduleIds);
 
     }
+
+
 
     public List<CourseModuleRelation> getAllCoursesForModule(String moduleTitle) {
         return courseModuleRelationRepository.findByModuleId(moduleTitle);

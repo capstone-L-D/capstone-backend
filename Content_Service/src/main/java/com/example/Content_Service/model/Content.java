@@ -12,8 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Content {
     @Id
-    private Long contentId;
-    private Long moduleId;
+    private String contentId;
+    private String moduleId;
+    private String ContentTitle;
     private String contentType;
     private String contentUrl;
+    private  boolean isCompleted;
+
 }

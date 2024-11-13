@@ -16,15 +16,15 @@ public class ContentController {
     private ContentService contentService;
 
     @GetMapping("/module/{moduleId}")
-    public List<Content> getContentByModuleId(@PathVariable Long moduleId) {
+    public List<Content> getContentByModuleId(@PathVariable String moduleId) {
         return contentService.getContentByModuleId(moduleId);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Content> getContentById(@PathVariable Long id) {
+    public ResponseEntity<Content> getContentById(@PathVariable String id) {
         return contentService.getContentById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -33,14 +33,14 @@ public class ContentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Content> updateContent(@PathVariable Long id, @RequestBody Content updatedContent) {
+    public ResponseEntity<Content> updateContent(@PathVariable String id, @RequestBody Content updatedContent) {
         return contentService.updateContent(id, updatedContent)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteContent(@PathVariable String id) {
         if (contentService.deleteContent(id)) {
             return ResponseEntity.noContent().build();
         }

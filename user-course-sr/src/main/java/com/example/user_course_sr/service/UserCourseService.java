@@ -80,6 +80,7 @@ public class UserCourseService {
                     course.getCourseLevel(),
                     course.getCourseCategory(),
                     course.getImgUrl(),
+                    userCourse != null ? userCourse.getUserCourseId() : null,
                     userCourse != null ? userCourse.getEnrollmentDate() : null,
                     userCourse != null ? userCourse.getProgress() : null,
                     userCourse != null ? userCourse.getCompletionDate() : null,

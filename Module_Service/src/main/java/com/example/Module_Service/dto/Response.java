@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContentDto {
-    private String contentId;
+public class Response {
     private String moduleId;
-    private String ContentTitle;
-    private String contentType;
-    private String contentUrl;
-    private  boolean isCompleted;
+    private String moduleTitle;
+    private String moduleDuration;
+    private List<ContentDto> contentList;
 }

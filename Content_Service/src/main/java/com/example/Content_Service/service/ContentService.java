@@ -13,11 +13,11 @@ public class ContentService {
     @Autowired
     private ContentRepository contentRepository;
 
-    public List<Content> getContentByModuleId(Long moduleId) {
+    public List<Content> getContentByModuleId(String moduleId) {
         return contentRepository.findByModuleId(moduleId);
     }
 
-    public Optional<Content> getContentById(Long id) {
+    public Optional<Content> getContentById(String id) {
         return contentRepository.findById(id);
     }
 
@@ -25,14 +25,14 @@ public class ContentService {
         return contentRepository.save(content);
     }
 
-    public Optional<Content> updateContent(Long id, Content updatedContent) {
+    public Optional<Content> updateContent(String id, Content updatedContent) {
         return contentRepository.findById(id).map(existingContent -> {
 
             return contentRepository.save(existingContent);
         });
     }
 
-    public boolean deleteContent(Long id) {
+    public boolean deleteContent(String id) {
         if (contentRepository.existsById(id)) {
             contentRepository.deleteById(id);
             return true;
