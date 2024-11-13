@@ -14,11 +14,13 @@
         <module name="Course_service" />
         <module name="Module_Service" />
         <module name="content-service" />
-        <module name="LMS_UserAuthentication" />
         <module name="Service-client" />
         <module name="gateway-sr" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="LMS_UserAuthentication" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

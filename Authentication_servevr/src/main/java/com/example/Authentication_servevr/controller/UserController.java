@@ -61,18 +61,8 @@ public class UserController {
         return null;
     }
     @GetMapping("/validate/token")
-    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authHeader) {
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // Remove "Bearer " prefix
-            try {
-                boolean isValid = userService.verifyToken(token);
-                return ResponseEntity.ok(isValid);
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token format or signature");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Authorization header is missing or invalid");
-        }
+    public boolean validateToken(@RequestParam String token) {
+       return userService.verifyToken(token);
     }
 
 
