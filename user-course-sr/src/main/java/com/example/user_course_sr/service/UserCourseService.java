@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class UserCourseService {
@@ -89,5 +90,21 @@ public class UserCourseService {
         }).toList();
     }
 
-}
+    public boolean updateCourseProgress(UserCourse courseUpdated) {
+        Optional<UserCourse> courseOptional = userCourseRepository.findById(courseUpdated.getUserCourseId());
+
+        if (courseOptional.isPresent()) {
+            UserCourse course = courseOptional.get();
+            course.setProgress(courseUpdated.getProgress());
+            course.setIsCompleted(courseUpdated.getIsCompleted());
+
+            // Save updated course
+            userCourseRepository.save(course);
+
+            return true;
+        }
+        return false;
+    }
+    }
+
 

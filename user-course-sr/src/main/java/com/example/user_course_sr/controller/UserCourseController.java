@@ -5,9 +5,13 @@ import com.example.user_course_sr.dto.Response;
 import com.example.user_course_sr.model.UserCourse;
 import com.example.user_course_sr.service.UserCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user-courses")
@@ -42,5 +46,18 @@ public class UserCourseController {
     public List<UserCourse> getCompletedCourses(@PathVariable String userId) {
         return userCourseService.getCompletedCoursesByUser(userId);
     }
-}
+
+    @PostMapping("/update-course-progress")
+    public ResponseEntity<Map<String, String>> updateCourseProgress(@RequestBody UserCourse courseUpdated) {
+        boolean success = userCourseService.updateCourseProgress(courseUpdated);
+        Map<String, String> response = new HashMap<>();
+
+        if (success) {
+            response.put("message", "Course progress updated successfully");
+            return ResponseEntity.ok(response); // Return JSON response
+        } else {
+            response.put("message", "Failed to update course progress");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+}}
 

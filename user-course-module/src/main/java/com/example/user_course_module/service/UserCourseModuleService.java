@@ -59,6 +59,7 @@ public class UserCourseModuleService {
                     response.setModuleId(receivedResponse.getModuleId());
                     response.setModuleTitle(receivedResponse.getModuleTitle());
                     response.setModuleDuration(receivedResponse.getModuleDuration());
+
                     response.setUserCourseModuleId(matchingUserCourseModule.getUserCourseModuleId()); // From UserCourseModule
                     response.setUserCourseId(matchingUserCourseModule.getUserCourseId()); // From UserCourseModule
                     response.setCourseModuleId(matchingUserCourseModule.getCourseModuleId()); // From UserCourseModule
@@ -66,6 +67,7 @@ public class UserCourseModuleService {
                     response.setCompletionStatus(matchingUserCourseModule.getCompletionStatus()); // From UserCourseModule
                     response.setStartDate(matchingUserCourseModule.getStartDate()); // From UserCourseModule
                     response.setCompletionDate(matchingUserCourseModule.getCompletionDate()); // From UserCourseModule
+                    response.setModuleCompleted(matchingUserCourseModule.isModuleCompleted());
                     response.setContentList(receivedResponse.getContentList()); // Content list from ReceivedResponse
 
                     return response;
@@ -73,26 +75,23 @@ public class UserCourseModuleService {
                 .collect(Collectors.toList());
     }
 
-
-
-
-    public UserCourseModule updateModuleProgress(UserCourseModule updatedUserCourseModule) {
-
+    public UserCourseModule updateModuleCompletionStatus(UserCourseModule updatedUserCourseModule) {
         Optional<UserCourseModule> existingModuleOpt = repository.findById(updatedUserCourseModule.getUserCourseModuleId());
 
         if (existingModuleOpt.isPresent()) {
             UserCourseModule existingModule = existingModuleOpt.get();
 
-
-            existingModule.setProgress(updatedUserCourseModule.getProgress());
-            existingModule.setCompletionStatus(updatedUserCourseModule.getCompletionStatus());
-            existingModule.setStartDate(updatedUserCourseModule.getStartDate());
-            existingModule.setCompletionDate(updatedUserCourseModule.getCompletionDate());
-
+            // Only update the completionStatus field
+            existingModule.setModuleCompleted(updatedUserCourseModule.isModuleCompleted());
 
             return repository.save(existingModule);
         } else {
-            return null;
+            return null; // Return null if the module doesn't exist
         }
     }
+
+
+
+
+
 }

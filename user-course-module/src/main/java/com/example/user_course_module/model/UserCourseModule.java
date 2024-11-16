@@ -25,7 +25,10 @@ public class UserCourseModule {
     private String completionStatus; // e.g., "In Progress", "Completed"
     private LocalDate startDate;
     private LocalDate completionDate;
-    private boolean isCompleted;
+
+
+
+    private boolean moduleCompleted;
 
     // Constructors, Getters, and Setters
 }

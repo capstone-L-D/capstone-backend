@@ -39,5 +39,9 @@ public class ContentService {
         }
         return false;
     }
+
+    public List<Content> saveAllContents(List<Content> contents) {
+        return contentRepository.saveAll(contents);
+    }
 }
 

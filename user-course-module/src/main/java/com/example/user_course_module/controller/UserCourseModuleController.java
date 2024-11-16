@@ -28,4 +28,15 @@ public class UserCourseModuleController {
     public List<Response> getModulesByUserCourseId(@PathVariable String userCourseId) {
         return userCourseModuleService.getModulesByUserCourseId(userCourseId);
     }
+    @PostMapping("/update-module-progress")
+    public ResponseEntity<UserCourseModule> updateModuleProgress(@RequestBody UserCourseModule updatedUserCourseModule) {
+        UserCourseModule updatedModule = userCourseModuleService.updateModuleCompletionStatus(updatedUserCourseModule);
+
+        if (updatedModule != null) {
+            return ResponseEntity.ok(updatedModule);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

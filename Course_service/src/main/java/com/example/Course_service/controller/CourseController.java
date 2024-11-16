@@ -2,6 +2,7 @@ package com.example.Course_service.controller;
 
 
 
+import com.example.Course_service.dto.InputDto;
 import com.example.Course_service.model.Course;
 import com.example.Course_service.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,10 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createCourses(@RequestBody InputDto inputDtos) {
+        return courseService.createCourses(inputDtos);
     }
 }

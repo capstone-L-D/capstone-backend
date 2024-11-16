@@ -50,5 +50,7 @@ public class CourseModuleService {
     public List<CourseModuleRelation> getAllRelations() {
         return courseModuleRelationRepository.findAll();
     }
+
+
 }
 

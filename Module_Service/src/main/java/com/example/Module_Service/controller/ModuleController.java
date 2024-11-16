@@ -1,5 +1,6 @@
 package com.example.Module_Service.controller;
 
+import com.example.Module_Service.dto.InputDto;
 import com.example.Module_Service.dto.ModuleWithContentDTO;
 import com.example.Module_Service.model.Modules;
 import com.example.Module_Service.service.ModuleService;
@@ -15,6 +16,10 @@ public class ModuleController {
 
     @Autowired
     private ModuleService moduleService;
+    @GetMapping
+    public List<Modules> getAllModules() {
+        return moduleService.getAllModules();
+    }
 
     // Get module by ID
     @GetMapping("/{id}")
@@ -53,5 +58,11 @@ public class ModuleController {
     public ResponseEntity<Void> deleteModule(@PathVariable String id) {
         moduleService.deleteModule(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createModuleWithContent(@RequestBody InputDto inputDto) {
+
+        return ResponseEntity.ok(moduleService.createModuleWithContent(inputDto));
     }
 }

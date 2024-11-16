@@ -46,5 +46,10 @@ public class ContentController {
         }
         return ResponseEntity.notFound().build();
     }
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Content>> createMultipleContents(@RequestBody List<Content> contents) {
+        List<Content> savedContents = contentService.saveAllContents(contents);
+        return ResponseEntity.ok(savedContents);
+    }
 }
 

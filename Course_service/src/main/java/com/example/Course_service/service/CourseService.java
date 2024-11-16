@@ -1,9 +1,12 @@
 package com.example.Course_service.service;
 
+import com.example.Course_service.dto.CourseModuleDto;
+import com.example.Course_service.dto.InputDto;
 import com.example.Course_service.model.Course;
 import com.example.Course_service.repo.CourseRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -54,4 +57,37 @@ public class CourseService {
     public List<Course> getCoursesByIds(List<String> courseIds) {
         return courseRepository.findByCourseIdIn(courseIds);
     }
+
+    public String createCourses(InputDto inputDtos) {
+
+            Course course = new Course();
+            course.setCourseTitle(inputDtos.getCourseTitle());
+            course.setCourseDescription(inputDtos.getCourseDescription());
+            course.setCourseDuration(inputDtos.getCourseDuration());
+
+            course.setCourseCategory(inputDtos.getCourseCategory());
+            course.setCourseLevel(inputDtos.getCourseLevel());
+            course.setImgUrl(inputDtos.getImgUrl());
+
+        Course savedCourse = courseRepository.save(course);
+        List<String> moduleIds = inputDtos.getModuleIds();
+        // Save the content
+        List<CourseModuleDto> courseModuleDtos = List.of();
+        moduleIds.forEach(moduleId -> {
+            CourseModuleDto courseModuleDto = new CourseModuleDto();
+            courseModuleDto.setCourseId(savedCourse.getCourseId());
+            courseModuleDto.setModuleId(moduleId);
+            courseModuleDtos.add(courseModuleDto);
+        });
+
+        ResponseEntity<List<CourseModuleDto>> res=contentClient.createMultipleContents(courseModuleDtos);
+        if(res.getStatusCode().is2xxSuccessful()){
+            return "Created";
+        }else{
+            throw new RuntimeException("Failed to create module with content");
+        }
+
+
+
+
 }

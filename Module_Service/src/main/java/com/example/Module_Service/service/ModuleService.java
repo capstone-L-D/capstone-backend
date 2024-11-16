@@ -1,11 +1,13 @@
 package com.example.Module_Service.service;
 
 import com.example.Module_Service.dto.ContentDto;
+import com.example.Module_Service.dto.InputDto;
 import com.example.Module_Service.dto.ModuleWithContentDTO;
 import com.example.Module_Service.feignClient.ContentClient;
 import com.example.Module_Service.model.Modules;
 import com.example.Module_Service.repo.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,4 +85,30 @@ public class ModuleService {
         return moduleWithContentDTOList;
     }
 
+    public String createModuleWithContent(InputDto inputDto) {
+        Modules module = new Modules();
+        module.setModuleTitle(inputDto.getModuleTitle());
+        module.setModuleDuration(inputDto.getModuleDuration());
+        List<ContentDto> contentList = inputDto.getContents();
+
+
+        // Save the module
+        Modules savedModule = moduleRepository.save(module);
+
+        // Save the content
+        contentList.forEach(content -> content.setModuleId(savedModule.getModuleId()));
+
+        ResponseEntity<List<ContentDto>> res=contentClient.createMultipleContents(contentList);
+        if(res.getStatusCode().is2xxSuccessful()){
+            return "Created";
+        }else{
+            throw new RuntimeException("Failed to create module with content");
+        }
+
+
+    }
+
+    public List<Modules> getAllModules() {
+        return moduleRepository.findAll();
+    }
 }

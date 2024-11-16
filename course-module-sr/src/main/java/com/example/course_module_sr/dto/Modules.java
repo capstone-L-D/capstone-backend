@@ -14,5 +14,6 @@ public class Modules {
     private String moduleId;
     private String moduleTitle;
     private String moduleDuration;
+    private boolean isModuleCompleted;
 
 }

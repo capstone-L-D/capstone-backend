@@ -1,4 +1,4 @@
-package com.example.course_module_sr.dto;
+package com.example.Module_Service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Response {
-    private String moduleId;
+public class InputDto {
+
     private String moduleTitle;
     private String moduleDuration;
-    private boolean isModuleCompleted;
-    private String CourseModuleId;
-    private List<ContentDto> contentList;
+    private List<ContentDto> contents;
 }

@@ -51,44 +51,7 @@ public class CourseModuleController {
 
 
 
-//    @PostMapping("/modules")
-//    public List<Response> getModulesByCourseIds(@RequestBody List<String> courseModuleIds) {
-//
-//        // Use only the first CourseModuleId from the list to retrieve courseId
-//        Optional<CourseModuleRelation> optionalCourseModule = courseModuleRepo.findById(courseModuleIds.get(0));
-//
-//        if (optionalCourseModule.isEmpty()) {
-//            throw new IllegalArgumentException("Invalid courseModuleId: " + courseModuleIds.get(0));
-//        }
-//
-//        // Retrieve courseId from the first CourseModuleRelation
-//        CourseModuleRelation initialCourseModuleRelation = optionalCourseModule.get();
-//        String courseId = initialCourseModuleRelation.getCourseId();
-//
-//        // Fetch all modules for the specified courseId
-//        List<ModuleWithContentDTO> modules = courseModuleService.getAllModulesForCourse(courseId);
-//
-//        // Map each module to a Response object with a unique courseModuleId based on courseId and moduleId
-//        return modules.stream().map(module -> {
-//            // Find the unique CourseModuleRelation for the given courseId and moduleId
-//            Optional<CourseModuleRelation> courseModuleRelationOpt = courseModuleRepo.findByCourseIdAndModuleId(courseId, module.getModuleId());
-//
-//            // Ensure the CourseModuleRelation exists
-//            if (courseModuleRelationOpt.isEmpty()) {
-//                throw new IllegalArgumentException("No CourseModuleRelation found for courseId: " + courseId + " and moduleId: " + module.getModuleId());
-//            }
-//
-//            CourseModuleRelation courseModuleRelation = courseModuleRelationOpt.get();
-//
-//            // Construct the response object
-//            Response response = new Response();
-//            response.setModuleId(module.getModuleId());
-//            response.setModuleTitle(module.getModuleTitle());
-//            response.setModuleDuration(module.getModuleDuration());
-//            response.setCourseModuleId(courseModuleRelation.getCourseModuleId()); // Unique courseModuleId for each module
-//            return response;
-//        }).collect(Collectors.toList());
-//    }
+
 @PostMapping("/modules")
 public List<Response> getModulesByCourseIds(@RequestBody List<String> courseModuleIds) {
     // Use only the first CourseModuleId from the list to retrieve courseId
@@ -126,6 +89,7 @@ public List<Response> getModulesByCourseIds(@RequestBody List<String> courseModu
         response.setModuleId(module.getModuleId());
         response.setModuleTitle(module.getModuleTitle());
         response.setModuleDuration(module.getModuleDuration());
+        response.setModuleCompleted(module.isModuleCompleted());
         response.setCourseModuleId(courseModuleRelation.getCourseModuleId()); // Unique courseModuleId for each module
         response.setContentList(contentList); // Set the list of contents
 
@@ -153,5 +117,9 @@ public List<Response> getModulesByCourseIds(@RequestBody List<String> courseModu
         List<CourseModuleRelation> relations = courseModuleService.getAllRelations();
         return ResponseEntity.ok(relations);
     }
+
+
+
+
 }
 
