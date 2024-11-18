@@ -91,7 +91,7 @@ public class UserCourseModuleService {
     }
 
 
-
-
-
+    public List<UserCourseModule> createAssociations(List<UserCourseModule> userCourseModules) {
+        return repository.saveAll(userCourseModules);
+    }
 }

@@ -18,6 +18,8 @@ public class JwtService {
         Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
     }
 
+
+
     private String createToken(Map<String, Object> claims, String userMail) {
         return Jwts.builder()
                 .setClaims(claims)

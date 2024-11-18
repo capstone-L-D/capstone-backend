@@ -49,6 +49,12 @@ public class CourseModuleController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<CourseModuleRelation>> createAssociations(@RequestBody List<CourseModuleRelation> relations) {
+        List<CourseModuleRelation> createdRelations = courseModuleService.createAssociations(relations);
+        return ResponseEntity.ok(createdRelations);
+    }
+
 
 
 
@@ -118,6 +124,11 @@ public List<Response> getModulesByCourseIds(@RequestBody List<String> courseModu
         return ResponseEntity.ok(relations);
     }
 
+
+    @GetMapping("/courseModules/{courseId}")
+    public List<String> getCourseModulesByCourseId(@PathVariable String courseId) {
+        return courseModuleService.getCourseModulesByCourseId(courseId);
+    }
 
 
 

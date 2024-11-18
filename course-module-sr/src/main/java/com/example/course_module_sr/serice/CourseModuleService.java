@@ -52,5 +52,16 @@ public class CourseModuleService {
     }
 
 
+    public List<CourseModuleRelation> createAssociations(List<CourseModuleRelation> relations) {
+        return courseModuleRelationRepository.saveAll(relations);
+    }
+
+    public List<String> getCourseModulesByCourseId(String courseId) {
+        return courseModuleRelationRepository.findByCourseId(courseId)
+                .stream()
+                .map(CourseModuleRelation::getCourseModuleId)
+                .toList();
+
+    }
 }
 

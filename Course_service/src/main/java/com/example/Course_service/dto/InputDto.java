@@ -18,5 +18,5 @@ public class InputDto {
     private String courseLevel;
     private String courseCategory;
     private String imgUrl;
-    List<String> moduleIds;
+    List<String> selectedModules;
 }

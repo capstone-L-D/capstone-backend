@@ -62,7 +62,7 @@ public class CourseController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCourses(@RequestBody InputDto inputDtos) {
-        return courseService.createCourses(inputDtos);
+    public String createCourses(@RequestBody InputDto inputDto) {
+        return courseService.createCourses(inputDto);
     }
 }

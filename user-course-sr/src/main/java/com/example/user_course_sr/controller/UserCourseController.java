@@ -25,7 +25,7 @@ public class UserCourseController {
 
     @PostMapping("/enroll")
     public UserCourse enrollUser(@RequestBody  UserCourse userCourse) {
-        return userCourseService.enrollUserInCourse(userCourse.getUserCourseId(),userCourse.getUserId(), userCourse.getCourseId());
+        return userCourseService.enrollUserInCourse(userCourse.getUserId(), userCourse.getCourseId());
 
     }
 

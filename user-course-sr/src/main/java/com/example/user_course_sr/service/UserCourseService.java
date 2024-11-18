@@ -2,11 +2,17 @@ package com.example.user_course_sr.service;
 
 import com.example.user_course_sr.dto.Course;
 import com.example.user_course_sr.dto.Response;
+import com.example.user_course_sr.dto.UserCourseModule;
 import com.example.user_course_sr.figenClient.CourseClient;
+import com.example.user_course_sr.figenClient.CourseModuleClient;
+import com.example.user_course_sr.figenClient.UserCourseModuleClient;
 import com.example.user_course_sr.model.UserCourse;
 import com.example.user_course_sr.repo.UserCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -20,15 +26,38 @@ public class UserCourseService {
     private CourseClient courseClient;
 
 
-    public UserCourse enrollUserInCourse(String userCourseId, String userId, String courseId) {
+    @Autowired
+
+    private CourseModuleClient courseModuleClient;
+
+    @Autowired
+    private UserCourseModuleClient userCourseModuleClient;
+
+    public UserCourse enrollUserInCourse( String userId, String courseId) {
         UserCourse userCourse = new UserCourse();
-        userCourse.setUserCourseId(userCourseId);
+
         userCourse.setUserId(userId);
         userCourse.setCourseId(courseId);
         userCourse.setEnrollmentDate(LocalDate.now());
         userCourse.setProgress(0.0);
         userCourse.setIsCompleted(false);
-        return userCourseRepository.save(userCourse);
+        UserCourse savedUserCourse =userCourseRepository.save(userCourse);
+        List<String> courseModules = courseModuleClient.getCourseModulesByCourseId(courseId);
+        List<UserCourseModule> userCourseModules = new ArrayList<>();
+        for (String courseModule : courseModules) {
+            UserCourseModule userCourseModule = new UserCourseModule();
+           userCourseModule.setCourseModuleId(courseModule);
+           userCourseModule.setUserCourseId(savedUserCourse.getUserCourseId());
+            userCourseModules.add(userCourseModule);
+        }
+        ResponseEntity<List<UserCourseModule>> res =userCourseModuleClient.createAssociations(userCourseModules);
+
+        if(res.getStatusCode().is2xxSuccessful()){
+            return savedUserCourse;
+        }
+        else{
+            throw new RuntimeException("Failed to create module with content");
+        }
     }
 
     public List<UserCourse> getUserCourses(String userId) {

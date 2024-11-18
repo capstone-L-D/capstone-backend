@@ -20,5 +20,6 @@ public class UserEnt {
     private String userName;
     private String userMail;
     private String userPassword;
+    private  String role;
 
 }

@@ -34,9 +34,19 @@ public class UserController {
     @Autowired
     private UserRepo userRepo;
 
-    @PostMapping("/register")
-    public UserEnt register(@RequestBody UserEnt user) {
-        return userService.register(user);
+    @PostMapping("/register/admin")
+    public ResponseEntity<String> registerDirector(@RequestBody UserEnt user) {
+        user.setRole("ADMIN");
+        UserEnt savedUser = userService.register(user);
+        return ResponseEntity.ok("Admin registered with ID: " + savedUser.getUserId());
+    }
+
+    // Endpoint for registering a new Artist
+    @PostMapping("/register/user")
+    public ResponseEntity<String> registerArtist(@RequestBody UserEnt user) {
+        user.setRole("USER");
+        UserEnt savedUser = userService.register(user);
+        return ResponseEntity.ok("User registered with ID: " + savedUser.getUserId());
     }
 
     @PostMapping("/login")
@@ -54,6 +64,7 @@ public class UserController {
             response.put("token", token);                // Add the generated token
             response.put("username", olduser.getUserName());
             response.put("userMail", olduser.getUserMail());
+            response.put("role", olduser.getRole());
             System.out.println("USer resposne"+response);
             return ResponseEntity.ok(response);
         }

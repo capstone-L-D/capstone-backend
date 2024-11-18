@@ -39,4 +39,10 @@ public class UserCourseModuleController {
         }
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<UserCourseModule>> createAssociations(@RequestBody List<UserCourseModule> userCourseModules) {
+        List<UserCourseModule> createdUserCourseModules = userCourseModuleService.createAssociations(userCourseModules);
+        return ResponseEntity.ok(createdUserCourseModules);
+    }
+
 }

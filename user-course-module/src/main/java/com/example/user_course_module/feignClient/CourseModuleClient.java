@@ -4,6 +4,8 @@ import com.example.user_course_module.dto.Modules;
 import com.example.user_course_module.dto.ReceivedResponse;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,4 +15,6 @@ import java.util.List;
 public interface CourseModuleClient {
     @PostMapping("/modules")
     public List<ReceivedResponse> getModulesByCourseIds(@RequestBody List<String> CourseModuleIds);
+
+
 }
