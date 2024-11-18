@@ -23,6 +23,7 @@ public class UserCourseAssessmentController {
         userCourseAssessment.setAssessmentId(assessmentId);
         userCourseAssessment.setStatus("In Progress");
         userCourseAssessment.setAttemptDate(LocalDate.now());
+
         return userCourseAssessmentRepository.save(userCourseAssessment);
     }
 
