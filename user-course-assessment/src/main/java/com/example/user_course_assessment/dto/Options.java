@@ -1,4 +1,4 @@
-package com.example.user_answer.dto;
+package com.example.user_course_assessment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

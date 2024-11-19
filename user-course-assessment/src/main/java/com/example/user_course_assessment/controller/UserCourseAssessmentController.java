@@ -1,5 +1,7 @@
 package com.example.user_course_assessment.controller;
 
+import com.example.user_course_assessment.dto.Options;
+import com.example.user_course_assessment.dto.UserAnswer;
 import com.example.user_course_assessment.model.UserCourseAssessment;
 import com.example.user_course_assessment.repo.UserCourseAssessmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +14,47 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/user-course-assessments")
+@CrossOrigin
 public class UserCourseAssessmentController {
     @Autowired
     private UserCourseAssessmentRepository userCourseAssessmentRepository;
 
     @PostMapping("/start")
     public UserCourseAssessment startAssessment(@RequestParam String userCourseId, @RequestParam String assessmentId) {
+        UserCourseAssessment u= userCourseAssessmentRepository.findByUserCourseId(userCourseId).orElse(null);
+        if(u==null){
         UserCourseAssessment userCourseAssessment = new UserCourseAssessment();
         userCourseAssessment.setUserCourseId(userCourseId);
         userCourseAssessment.setAssessmentId(assessmentId);
         userCourseAssessment.setStatus("In Progress");
         userCourseAssessment.setAttemptDate(LocalDate.now());
 
-        return userCourseAssessmentRepository.save(userCourseAssessment);
+        return userCourseAssessmentRepository.save(userCourseAssessment);}
+        else{
+            return u;
+        }
     }
 
-    @PostMapping("/{id}/complete")
-    public ResponseEntity<String> completeAssessment(@PathVariable String id) {
-        UserCourseAssessment userCourseAssessment = userCourseAssessmentRepository.findById(id)
+    @PostMapping("/complete")
+    public ResponseEntity<UserCourseAssessment> completeAssessment(@RequestBody UserAnswer userAnswer) {
+        UserCourseAssessment userCourseAssessment = userCourseAssessmentRepository.findById(userAnswer.getUserCourseAssessmentId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserCourseAssessment not found"));
 
-        // Assuming logic to calculate score and status
-         // Example score
-        userCourseAssessment.setStatus(userCourseAssessment.getScore() >= 60 ? "Passed" : "Failed");
-        userCourseAssessmentRepository.save(userCourseAssessment);
+        long totalScore = userAnswer.getSelectedOptions().stream().filter(Options::getIsCorrect).count();
+       userCourseAssessment.setScore((int) totalScore);
+        userCourseAssessment.setStatus(totalScore >= 6 ? "Passed" : "Failed");
 
-        return ResponseEntity.ok("Assessment completed and result calculated.");
+        ;
+
+        return ResponseEntity.ok(userCourseAssessmentRepository.save(userCourseAssessment));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserCourseAssessment> getUserCourseAssessment(@PathVariable String id) {
+        UserCourseAssessment userCourseAssessment = userCourseAssessmentRepository.findByUserCourseId(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserCourseAssessment not found"));
+
+        return ResponseEntity.ok(userCourseAssessment);
+    }
+
 }
 
