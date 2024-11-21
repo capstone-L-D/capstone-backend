@@ -65,4 +65,9 @@ public class CourseController {
     public String createCourses(@RequestBody InputDto inputDto) {
         return courseService.createCourses(inputDto);
     }
+
+    @GetMapping("/courseTitle/{courseId}")
+    public String getCourseTitleById(@PathVariable String courseId) {
+        return courseService.getCourseTitleById(courseId);
+    }
 }

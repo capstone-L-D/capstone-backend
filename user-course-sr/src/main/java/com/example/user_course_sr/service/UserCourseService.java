@@ -5,6 +5,7 @@ import com.example.user_course_sr.dto.Response;
 import com.example.user_course_sr.dto.UserCourseModule;
 import com.example.user_course_sr.figenClient.CourseClient;
 import com.example.user_course_sr.figenClient.CourseModuleClient;
+import com.example.user_course_sr.figenClient.UserClient;
 import com.example.user_course_sr.figenClient.UserCourseModuleClient;
 import com.example.user_course_sr.model.UserCourse;
 import com.example.user_course_sr.repo.UserCourseRepository;
@@ -32,6 +33,9 @@ public class UserCourseService {
 
     @Autowired
     private UserCourseModuleClient userCourseModuleClient;
+
+    @Autowired
+    private UserClient userClient;
 
     public UserCourse enrollUserInCourse( String userId, String courseId) {
         UserCourse userCourse = new UserCourse();
@@ -134,6 +138,27 @@ public class UserCourseService {
         }
         return false;
     }
+
+    public List<String> getUsersByCourseId(String courseId) {
+        List<UserCourse> userCourses = userCourseRepository.findByCourseId(courseId);
+        List<String> userIds = new ArrayList<>();
+        for (UserCourse userCourse : userCourses) {
+            userIds.add(userCourse.getUserId());
+        }
+
+
+
+
+        return userIds;
     }
+
+    public String getUserEmail(String userId) {
+        return userClient.getUserMail(userId);
+    }
+
+    public String getCourseName(String courseId) {
+        return courseClient.getCourseTitleById(courseId);
+    }
+}
 
 

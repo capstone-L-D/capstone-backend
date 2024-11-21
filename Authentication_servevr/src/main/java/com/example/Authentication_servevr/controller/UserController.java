@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -64,6 +65,7 @@ public class UserController {
             response.put("token", token);                // Add the generated token
             response.put("username", olduser.getUserName());
             response.put("userMail", olduser.getUserMail());
+            response.put("jobRole", olduser.getJobRole());
             response.put("role", olduser.getRole());
             System.out.println("USer resposne"+response);
             return ResponseEntity.ok(response);
@@ -77,8 +79,18 @@ public class UserController {
     }
 
 
-    @GetMapping("/sample")
-    public String sample() {
-        return "Success";
+
+
+    @GetMapping
+    public List<UserEnt> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @GetMapping("/mail/{userId}")
+    public String getUserMail(@PathVariable String userId) {
+        UserEnt user = userRepo.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+
+        return user.getUserMail();
     }
 }

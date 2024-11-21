@@ -16,10 +16,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class UserEnt {
     @Id
-    private String userId;         // Unique identifier for the
+    private String userId;         
     private String userName;
     private String userMail;
     private String userPassword;
+    private String jobRole;
     private  String role;
 
 }

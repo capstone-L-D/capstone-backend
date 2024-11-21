@@ -93,4 +93,13 @@ public class CourseService {
         }
     }
 
+    public String getCourseTitleById(String courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            return course.getCourseTitle();
+        } else {
+            return "Course not found";
+        }
+    }
 }

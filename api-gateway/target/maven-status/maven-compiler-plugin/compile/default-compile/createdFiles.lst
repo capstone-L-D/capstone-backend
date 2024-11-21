@@ -1,4 +1,0 @@
-com\example\gateway_sr\GatewaySrApplication.class
-com\example\gateway_sr\filter\AuthenticationFilter$Config.class
-com\example\gateway_sr\filter\AuthenticationFilter.class
-com\example\gateway_sr\filter\RouteValidater.class
