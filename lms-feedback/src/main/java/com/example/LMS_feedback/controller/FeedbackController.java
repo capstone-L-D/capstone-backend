@@ -72,6 +72,16 @@ public class FeedbackController {
         }
 
     }
+    @GetMapping("/getFeedbackByCourse/{id}")
+    public ResponseEntity<List<Feedback>> getFeedbackByCourse(@PathVariable String id) {
+        List<Feedback> feedback = service.getfeedbackbycourseid(id);
+        if (feedback != null) {
+            return ResponseEntity.ok(feedback);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 
 
 }

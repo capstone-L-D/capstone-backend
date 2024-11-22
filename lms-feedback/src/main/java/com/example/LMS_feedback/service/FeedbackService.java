@@ -68,7 +68,10 @@ public class FeedbackService {
             }
         }
 
+    public List<Feedback> getfeedbackbycourseid(String id) {
+            return repo.findByCourseId(id);
     }
+}
 
 
 
