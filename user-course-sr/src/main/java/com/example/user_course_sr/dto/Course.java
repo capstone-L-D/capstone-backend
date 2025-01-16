@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +16,6 @@ public class Course {
     private String courseDuration;
     private String courseLevel;
     private String courseCategory;
+    private Date DeadLine;
     private String imgUrl;
 }

@@ -58,19 +58,19 @@ public class FeedbackService {
         }
 
 
-        public Feedback getfeedbackbyusercourseid(String userCourseId) {
+//        public Feedback getfeedbackbyusercourseid(String userCourseId) {
+//
+//            Optional<Feedback> op = repo.findByUserCourseId(userCourseId);
+//            if (op.isPresent()) {
+//                return op.get();
+//            } else {
+//                throw new RuntimeException("Feedback not found with id " + userCourseId);
+//            }
+//        }
 
-            Optional<Feedback> op = repo.findByUserCourseId(userCourseId);
-            if (op.isPresent()) {
-                return op.get();
-            } else {
-                throw new RuntimeException("Feedback not found with id " + userCourseId);
-            }
-        }
-
-    public List<Feedback> getfeedbackbycourseid(String id) {
-            return repo.findByCourseId(id);
-    }
+//    public List<Feedback> getfeedbackbycourseid(String id) {
+//            return repo.findByCourseId(id);
+//    }
 }
 
 

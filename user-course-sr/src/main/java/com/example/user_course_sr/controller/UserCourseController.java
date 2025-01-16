@@ -27,9 +27,9 @@ public class UserCourseController {
 
         @PostMapping("/enroll")
         public UserCourse enrollUser(@RequestBody  UserCourse userCourse) {
-            System.out.println("yes");
 
-            UserCourse savedUserCourse = userCourseService.enrollUserInCourse(userCourse.getUserId(), userCourse.getCourseId());
+
+            UserCourse savedUserCourse = userCourseService.enrollUserInCourse(userCourse.getUserId(), userCourse.getCourseId(),userCourse.getDeadLine());
             notifyUser(savedUserCourse);
             return savedUserCourse;
         }

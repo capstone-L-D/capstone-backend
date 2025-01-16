@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class UserCourseService {
     @Autowired
     private UserClient userClient;
 
-    public UserCourse enrollUserInCourse( String userId, String courseId) {
+    public UserCourse enrollUserInCourse(String userId, String courseId, Date deadLine) {
         UserCourse userCourse = new UserCourse();
 
         userCourse.setUserId(userId);
@@ -45,6 +46,7 @@ public class UserCourseService {
         userCourse.setEnrollmentDate(LocalDate.now());
         userCourse.setProgress(0.0);
         userCourse.setIsCompleted(false);
+        userCourse.setDeadLine(deadLine);
         UserCourse savedUserCourse =userCourseRepository.save(userCourse);
         List<String> courseModules = courseModuleClient.getCourseModulesByCourseId(courseId);
         List<UserCourseModule> userCourseModules = new ArrayList<>();
@@ -117,7 +119,7 @@ public class UserCourseService {
                     userCourse != null ? userCourse.getUserCourseId() : null,
                     userCourse != null ? userCourse.getEnrollmentDate() : null,
                     userCourse != null ? userCourse.getProgress() : null,
-                    userCourse != null ? userCourse.getCompletionDate() : null,
+                    userCourse != null ? userCourse.getDeadLine() : null,
                     userCourse != null ? userCourse.getIsCompleted() : null
             );
         }).toList();

@@ -62,26 +62,26 @@ public class FeedbackController {
 
     }
 
-    @GetMapping("/getFeedbackByUC/{id}")
-    public ResponseEntity<Feedback> getFeedbackByUserCourse(@PathVariable String id) {
-        Feedback feedback = service.getfeedbackbyusercourseid(id);
-        if (feedback != null) {
-            return ResponseEntity.ok(feedback);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
-    }
-    @GetMapping("/getFeedbackByCourse/{id}")
-    public ResponseEntity<List<Feedback>> getFeedbackByCourse(@PathVariable String id) {
-        List<Feedback> feedback = service.getfeedbackbycourseid(id);
-        if (feedback != null) {
-            return ResponseEntity.ok(feedback);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
-    }
+//    @GetMapping("/getFeedbackByUC/{id}")
+//    public ResponseEntity<Feedback> getFeedbackByUserCourse(@PathVariable String id) {
+//        Feedback feedback = service.getfeedbackbyusercourseid(id);
+//        if (feedback != null) {
+//            return ResponseEntity.ok(feedback);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//    }
+//    @GetMapping("/getFeedbackByCourse/{id}")
+//    public ResponseEntity<List<Feedback>> getFeedbackByCourse(@PathVariable String id) {
+//        List<Feedback> feedback = service.getfeedbackbycourseid(id);
+//        if (feedback != null) {
+//            return ResponseEntity.ok(feedback);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//    }
 
 
 }

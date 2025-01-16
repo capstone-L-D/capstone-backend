@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Document
 @Data
@@ -20,6 +21,7 @@ public class UserCourse {
     private LocalDate enrollmentDate;
     private Double progress;
     private LocalDate completionDate;
+    private Date DeadLine;
     private Boolean isCompleted;
 
 }

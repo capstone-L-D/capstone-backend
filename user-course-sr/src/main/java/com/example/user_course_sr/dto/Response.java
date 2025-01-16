@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +21,6 @@ public class Response {
     private String userCourseId;
     private LocalDate enrollmentDate;
     private Double progress;
-    private LocalDate completionDate;
+    private Date DeadLine;
     private Boolean isCompleted;
 }

@@ -13,5 +13,5 @@ public interface FeedbackRepository extends MongoRepository<Feedback,String> {
     Optional<Feedback> findByFeedbackId(String feedbackId);
     Optional<Feedback> findByUserCourseId(String userCourseId);
 
-    List<Feedback> findByCourseId(String id);
+//    List<Feedback> findByCourseId(String id);
 }
